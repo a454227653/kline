@@ -24,7 +24,7 @@ class OkexWs(WebSocket):
                  task_center: TaskCenter = task_center):
         self._platform_tag = platform_tag or self._platform_tag
         self.server_name = server_name or self._platform_tag
-        self._rpc_client = RpcClient(self.server_name, self.server_id, hello_server=False)
+        #self._rpc_client = RpcClient(self.server_name, self.server_id, hello_server=False)
         self._platform_config = config.get('MarketServer.Platforms.{p}'.format(p=self._platform_tag))
         self._platform = self._platform_config.get('platform')
         self._host = self._platform_config.get('host')
@@ -47,7 +47,7 @@ class OkexWs(WebSocket):
     async def _log_report(self, type='monitor', msg=None):
         # 监控/报错日志
         if type == 'monitor':
-            data = {'type':'monitor','data_server_rt': int(self._rpc_client.rt), 'platform_rt': int(self._platform_rt)}
+            data = {'type':'monitor','data_server_rt': 0, 'platform_rt': 0}
         elif type == 'error':
             data = {'type':'error','e': msg.args[0], 'trace_back': "\n" + "".join(traceback.format_tb(msg.__traceback__))}
         else:
